@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>ID 중복체크</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="styles/style.css" rel="stylesheet" type="text/css">
 </head>
 <body bgcolor="#FFFFCC">
 	<div align="center">

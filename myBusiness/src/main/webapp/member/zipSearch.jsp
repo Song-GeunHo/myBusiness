@@ -15,7 +15,8 @@
 <html>
 <head>
 <title>우편번호 검색</title>
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="styles/style.css" rel="stylesheet" type="text/css">
+<style>#list:hover { color: #FFCC00;}</style>
 <script type="text/javascript">
 	function loadSearch() {
 		frm = document.zipFrm;
@@ -57,7 +58,7 @@
 					} else {
 				%>
 				<tr>
-					<td align="center"><br/>※검색 후, 아래 우편번호를 클릭하면 자동으로 입력됩니다.</td>
+					<td align="center" style="font-size: 18px;"><br/>※검색 후, 아래 우편번호를 클릭하면 자동으로 입력됩니다.</td>
 				</tr>
 				<%
 					for (int i = 0; i < vlist.size(); i++) {
@@ -69,7 +70,7 @@
 							String adds = rArea1 + " " + rArea2 + " " + rArea3 + " ";
 				%>
 				<tr>
-					<td><a href="#"
+					<td  id="list" style="font-size: 20px;"><a href="#"
 						onclick="javascript:sendAdd('<%=rZipcode%>','<%=adds%>')">
 							<%=rZipcode%> <%=adds%></a></td>
 				</tr>

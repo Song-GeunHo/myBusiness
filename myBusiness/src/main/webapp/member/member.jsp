@@ -2,8 +2,8 @@
 <html>
 <head>
 <title>회원가입</title>
-<link href="style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="script.js"></script>
+<link href="styles/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="scripts/script.js"></script>
 <script type="text/javascript">
 	function idCheck(id) {
 		frm = document.regFrm;
@@ -22,16 +22,16 @@
 	}
 </script>
 </head>
-<body bgcolor="#FFFFCC" onLoad="regFrm.id.focus()">
+<body onLoad="regFrm.id.focus()">
 	<div align="center">
 		<br /><br />
 		<form name="regFrm" method="post" action="memberProc.jsp">
 			<table cellpadding="5">
 				<tr>
-					<td bgcolor="#FFFFCC">
-						<table border="1" cellspacing="0" cellpadding="2" width="600">
-							<tr bgcolor="#996600">
-								<td colspan="3"><font color="#FFFFFF"><b>회원 가입</b></font></td>
+					<td>
+						<table border="1" cellspacing="0" cellpadding="2" width="900">
+							<tr bgcolor="#FFCC00">
+								<td colspan="3"><font color="black"><b>회원 가입</b></font></td>
 							</tr>
 							<tr>
 								<td width="20%">아이디</td>
@@ -67,8 +67,7 @@
 							</tr>
 							<tr>
 								<td>생년월일</td>
-								<td><input name="birthday" size="6">
-									ex)830815</td>
+								<td><input type="date" name="birthday" size="6" min="1950-01-01" max="2015-12-31"></td>
 								<td>생년월일를 적어 주세요.</td>
 							</tr>
 							<tr>
@@ -101,24 +100,29 @@
 							</tr>
 							<tr>
 								<td>직업</td>
-								<td><select name=job>
+								<td><select name=jobcode>
 										<option value="0" selected>선택하세요.
-										<option value="회사원">회사원
-										<option value="연구전문직">연구전문직
-										<option value="교수학생">교수학생
-										<option value="일반자영업">일반자영업
-										<option value="공무원">공무원
-										<option value="의료인">의료인
-										<option value="법조인">법조인
-										<option value="종교,언론,에술인">종교.언론/예술인
-										<option value="농,축,수산,광업인">농/축/수산/광업인
-										<option value="주부">주부
-										<option value="무직">무직
-										<option value="기타">기타
+										<option value="1">회사원
+										<option value="2">연구전문직
+										<option value="3">교수학생
+										<option value="4">일반자영업
+										<option value="5">공무원
+										<option value="6">의료인
+										<option value="7">법조인
+										<option value="8">종교.언론/예술인
+										<option value="9">농/축/수산/광업인
+										<option value="a">주부
+										<option value="0">무직
+										<option value="b">기타
 								</select></td>
 								<td>직업을 선택 하세요.</td>
 							</tr>
 							<tr>
+								<td>국적</td>
+								<td><input name="nationality" size="20"></td>
+								<td>국적을 입력하세요</td>
+							</tr>
+							<tr bgcolor="#FFCC00">
 								<td colspan="3" align="center">
 								   <input type="button" value="회원가입" onclick="inputCheck()">
 								    &nbsp; &nbsp; 

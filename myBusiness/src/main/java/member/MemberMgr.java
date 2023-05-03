@@ -1,5 +1,8 @@
 package member;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,7 +79,7 @@ public class MemberMgr {
 		try {
 			con = pool.getConnection();
 			sql = "insert tblMember(id,pwd,name,gender,birthday,email,zipcode"
-					+ ",address,hobby,job)values(?,?,?,?,?,?,?,?,?,?)";
+					+ ",address,hobby,jobcode,nationality)values(?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getId());
 			pstmt.setString(2, bean.getPwd());
@@ -96,7 +99,8 @@ public class MemberMgr {
 				}
 			}
 			pstmt.setString(9, new String(hb));
-			pstmt.setString(10, bean.getJob());
+			pstmt.setString(10, bean.getJobcode());
+			pstmt.setString(11, bean.getNationality());
 			if (pstmt.executeUpdate() == 1)
 				flag = true;
 		} catch (Exception e) {
@@ -133,6 +137,29 @@ public class MemberMgr {
 	/*************
 	 * ch17 필요한 메소드
 	 * ************/
+	
+	// jobname 가져오기
+	public String getjobname(String jobcode) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String jobname = "";
+		try {
+			con = pool.getConnection();
+			sql = "SELECT jobname FROM tblmember NATURAL JOIN tbljob WHERE jobcode = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, jobcode);
+			rs = pstmt.executeQuery();
+			if( rs.next() )
+				jobname = rs.getString("jobname");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return jobname;
+	}
 
 	// 회원정보가져오기
 	public MemberBean getMember(String id) {
@@ -162,7 +189,8 @@ public class MemberMgr {
 					hobbys[i] = hobby.substring(i, i + 1);
 				}
 				bean.setHobby(hobbys);
-				bean.setJob(rs.getString("job"));
+				bean.setJob(getjobname(rs.getString("jobcode")));
+				bean.setNationality(rs.getString("nationality"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -180,7 +208,7 @@ public class MemberMgr {
 		try {
 			con = pool.getConnection();
 			String sql = "update tblMember set pwd=?, name=?, gender=?, birthday=?,"
-					+ "email=?, zipcode=?, address=?, hobby=?, job=? where id = ?";
+					+ "email=?, zipcode=?, address=?, hobby=?, jobcode=?, nationality=? where id = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getPwd());
 			pstmt.setString(2, bean.getName());
@@ -200,8 +228,9 @@ public class MemberMgr {
 				}
 			}
 			pstmt.setString(8, new String(hobby));
-			pstmt.setString(9, bean.getJob());
-			pstmt.setString(10, bean.getId());
+			pstmt.setString(9, bean.getJobcode());
+			pstmt.setString(10, bean.getNationality());
+			pstmt.setString(11, bean.getId());
 			int count = pstmt.executeUpdate();
 			if (count > 0)
 				flag = true;

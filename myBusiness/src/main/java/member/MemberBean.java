@@ -12,6 +12,8 @@ public class MemberBean {
 	private String address;
 	private String hobby[];
 	private String job;
+	private String nationality;
+	private String jobcode;
 
 	public String getId() {
 		return id;
@@ -26,12 +28,13 @@ public class MemberBean {
 	}
 
 	public void setPwd(String pwd) {
-		this.pwd = pwd;
+		Encrypt encrypt = new Encrypt();
+		this.pwd = encrypt.getEncrypt(pwd);
 	}
 
 	public String getName() {
 		return name;
-	}
+	} 
 
 	public void setName(String name) {
 		this.name = name;
@@ -91,5 +94,22 @@ public class MemberBean {
 
 	public void setJob(String job) {
 		this.job = job;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getJobcode() {
+		return jobcode;
+	}
+
+	public void setJobcode(String jobcode) {
+		this.jobcode = jobcode;
 	}	
+	
 }
