@@ -141,7 +141,7 @@
 								cname = name.charAt(0) + "*";
 							} else {
 								cname += name.charAt(0);
-								for ( int k=1 ; k<name.length() ; k++ ) {
+								for ( int k=1 ; k<name.length()-1 ; k++ ) {
 									cname += "*";
 								}
 								cname += name.charAt(name.length()-1);

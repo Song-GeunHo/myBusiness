@@ -127,7 +127,7 @@
 								   <input type="button" value="회원가입" onclick="inputCheck()">
 								    &nbsp; &nbsp; 
 								    <input type="reset" value="다시쓰기">
-								    &nbsp; &nbsp; 
+								    &nbsp; &nbsp;
 								    <input type="button" value="로그인" onClick="javascript:location.href='login.jsp'">
 								 </td>
 							</tr>

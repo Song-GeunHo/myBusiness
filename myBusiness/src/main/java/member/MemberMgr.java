@@ -103,8 +103,8 @@ public class MemberMgr {
 			}
 			
 			pstmt.setString(9, new String(hb));
-			pstmt.setString(10, bean.getJobcode());
-			pstmt.setString(11, bean.getNationality());
+			pstmt.setString(10, bean.getNationality());
+			pstmt.setString(11, bean.getJobcode());
 			if (pstmt.executeUpdate() == 1)
 				flag = true;
 		} catch (Exception e) {

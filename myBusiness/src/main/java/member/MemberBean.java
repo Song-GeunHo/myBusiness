@@ -82,7 +82,7 @@ public class MemberBean {
 
 	public String[] getHobby() {
 		return hobby;
-	}
+	} 
 
 	public void setHobby(String[] hobby) {
 		System.out.println(hobby.toString());

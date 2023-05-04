@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<jsp:useBean id="encrypt" class="member.Encrypt"/>
 <%
 	  request.setCharacterEncoding("UTF-8");
 	  String id = (String)session.getAttribute("idKey");
@@ -30,7 +29,7 @@ input[type="button"]:hover { opacity: 0.8; }
 		}
 		document.loginFrm.submit();
 	} 
-	
+	/*
 	function rePwd() {
 		swal.fire({
 			  title: 'Login Form',
@@ -52,7 +51,7 @@ input[type="button"]:hover { opacity: 0.8; }
 			    Password: ${result.value.password}
 			  `.trim())
 			})
-		/*({
+		({
 				title: "비밀번호 확인",
 			 	icon: "info",
 			 	content: {
@@ -72,8 +71,8 @@ input[type="button"]:hover { opacity: 0.8; }
 				} else {
 
 				}
-			});*/
-	}
+			});
+	}*/
 </script>
 </head>
 <body>
@@ -81,8 +80,8 @@ input[type="button"]:hover { opacity: 0.8; }
 		<%if (id != null) {%>
 		<br><br>
 		<font size="10"><b><%=id%></b>님 환영 합니다.
-		<p>제한된 기능을 사용 할 수가 있습니다.<p/><hr><br><br>
-			<a href="../board/list.jsp">게시판</a> | <a href="infoInquiry.jsp">회원정보 조회</a> | <a href="logout.jsp">로그아웃</a></font>
+		<p>제한된 기능을 사용 할 수가 있습니다.<p/><hr><br><br></font>
+			<font size="7"><a href="../board/list.jsp">게시판</a> | <a href="../survey/pollList.jsp">설문조사</a> | <a href="infoInquiry.jsp">회원정보 조회</a> | <a href="logout.jsp">로그아웃</a></font>
 			<%} else {%>
 		<form name="loginFrm" method="post" action="loginProc.jsp">
 			<table>
@@ -100,7 +99,8 @@ input[type="button"]:hover { opacity: 0.8; }
 				<tr>
 					<td colspan="2">
 						<div align="right">
-							<input type="button" value="게시판" onclick="location.href='../board/list.jsp'" style="position: relative; left: -120px;">
+							<input type="button" value="게시판" onclick="location.href='../board/list.jsp'" style="position: relative; left: -65px;">
+							<input type="button" value="설문조사" onclick="location.href='../survey/pollList.jsp'" style="position: relative; left: -60px;">
 							<input type="button" value="로그인" onclick="loginCheck();">&nbsp;
 							<input type="button" value="회원가입" onClick="javascript:location.href='member.jsp'">
 						</div>
