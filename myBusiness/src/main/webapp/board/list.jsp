@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="board.BoardBean, java.util.*"%>
+<%@page import="board.BoardBean, java.util.*, java.util.regex.*"%>
 <%@page import="java.util.Vector"%>
 <jsp:useBean id="bMgr" class="board.BoardMgr" />
 <%	
@@ -135,6 +135,19 @@
 							BoardBean bean = vlist.get(i);
 							int num = bean.getNum();
 							String name = bean.getName();
+							String cname = "";			
+
+							if ( name.length() < 3 ) {
+								cname = name.charAt(0) + "*";
+							} else {
+								cname += name.charAt(0);
+								for ( int k=1 ; k<name.length() ; k++ ) {
+									cname += "*";
+								}
+								cname += name.charAt(name.length()-1);
+							}					
+							name = cname;
+							
 							String subject = bean.getSubject();
 							String regdate = bean.getRegdate();
 							int depth = bean.getDepth();

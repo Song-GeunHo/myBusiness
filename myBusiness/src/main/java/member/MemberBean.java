@@ -85,6 +85,7 @@ public class MemberBean {
 	}
 
 	public void setHobby(String[] hobby) {
+		System.out.println(hobby.toString());
 		this.hobby = hobby;
 	}
 

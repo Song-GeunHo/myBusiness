@@ -101,7 +101,8 @@
 							<tr>
 								<td>직업</td>
 								<td><select name=jobcode>
-										<option value="0" selected>선택하세요.
+										<option value="" selected>선택하세요.
+										<option value="0">무직
 										<option value="1">회사원
 										<option value="2">연구전문직
 										<option value="3">교수학생
@@ -112,7 +113,6 @@
 										<option value="8">종교.언론/예술인
 										<option value="9">농/축/수산/광업인
 										<option value="a">주부
-										<option value="0">무직
 										<option value="b">기타
 								</select></td>
 								<td>직업을 선택 하세요.</td>

@@ -54,7 +54,7 @@ function inputCheck(){
 		alert("우편번호를 검색해 주세요.");
 		return;
 	}
-	if(document.regFrm.job.value=="0"){
+	if(document.regFrm.jobcode.value==""){
 		alert("직업을 선택해 주세요.");
 		document.regFrm.job.focus();
 		return;

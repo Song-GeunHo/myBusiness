@@ -79,7 +79,7 @@ public class MemberMgr {
 		try {
 			con = pool.getConnection();
 			sql = "insert tblMember(id,pwd,name,gender,birthday,email,zipcode"
-					+ ",address,hobby,jobcode,nationality)values(?,?,?,?,?,?,?,?,?,?,?)";
+					+ ",address,hobby,nationality,jobcode)values(?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getId());
 			pstmt.setString(2, bean.getPwd());
@@ -92,12 +92,16 @@ public class MemberMgr {
 			String hobby[] = bean.getHobby();
 			char hb[] = { '0', '0', '0', '0', '0' };
 			String lists[] = { "인터넷", "여행", "게임", "영화", "운동" };
-			for (int i = 0; i < hobby.length; i++) {
-				for (int j = 0; j < lists.length; j++) {
-					if (hobby[i].equals(lists[j]))
-						hb[j] = '1';
+			
+			if ( hobby != null ) {
+				for (int i = 0; i < hobby.length; i++) {
+					for (int j = 0; j < lists.length; j++) {
+						if (hobby[i].equals(lists[j]))
+							hb[j] = '1';
+						}
 				}
 			}
+			
 			pstmt.setString(9, new String(hb));
 			pstmt.setString(10, bean.getJobcode());
 			pstmt.setString(11, bean.getNationality());

@@ -12,12 +12,19 @@
 	int num = Integer.parseInt(request.getParameter("num"));
 	BoardBean bean = (BoardBean) session.getAttribute("bean");
 	boolean secret = Boolean.parseBoolean(request.getParameter("secret"));
+	if ( session.getAttribute("deletedBoard") == null ) {
+		ArrayList<Integer> deletedBoard = new ArrayList<Integer>();
+		session.setAttribute("deletedBoard",deletedBoard);
+	}
 	if (secret) {
 		if (request.getParameter("pass") != null) {
 			String inPass = request.getParameter("pass");
 			String dbPass = bean.getPass();
 			if (inPass.equals(dbPass)) {
 				//bMgr.deleteBoard(num);
+				ArrayList<Integer> deletedBoard = (ArrayList<Integer>) session.getAttribute("deletedBoard");
+				deletedBoard.add(bean.getNum());
+				session.setAttribute("deletedBoard", deletedBoard);
 				String url = "list.jsp?nowPage=" + nowPage;
 				response.sendRedirect(url);
 			} else {
@@ -82,7 +89,7 @@
 <%
 } else {
 	//bMgr.deleteBoard(num);
-	ArrayList<Integer> deletedBoard = new ArrayList<Integer>();
+	ArrayList<Integer> deletedBoard = (ArrayList<Integer>) session.getAttribute("deletedBoard");
 	deletedBoard.add(bean.getNum());
 	session.setAttribute("deletedBoard", deletedBoard);
 	String url = "list.jsp?nowPage=" + nowPage;
