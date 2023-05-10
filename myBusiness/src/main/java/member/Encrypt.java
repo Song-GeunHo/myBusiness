@@ -5,11 +5,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class Encrypt {
-	private String salt = "K7M2sZAuZg+hSdCD7RwLQw==";
 	
-	public String getEncrypt(String pwd) {
+	public static String getEncrypt(String pwd) {
 		
 		String result = "";
+		String salt = "K7M2sZAuZg+hSdCD7RwLQw==";
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			

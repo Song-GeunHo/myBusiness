@@ -86,7 +86,7 @@ input[type="button"]:hover { opacity: 0.8; }
 		<form name="loginFrm" method="post" action="loginProc.jsp">
 			<table>
 				<tr>
-					<td align="center" colspan="2"><h4>홈페이지</h4></td>
+					<td align="center" colspan="2"><h4 style="background-color:#FFCC00; color:#414141">JSPStudy</h4></td>
 				</tr>
 				<tr>
 					<td>아 이 디</td>
@@ -108,6 +108,10 @@ input[type="button"]:hover { opacity: 0.8; }
 				</tr>
 			</table>
 		</form>
+		<div style="width:500px;display:flex; justify-content:center;">
+			<div style="width:15px; background-color:white;"></div>
+			<div style="font-size:2em; cursor:pointer;" onclick="window.open('jstl/JSTLlogin.jsp');">JSTL_SQL TAG</div>
+		</div>
 		<%}%>
 	</div>
 </body>

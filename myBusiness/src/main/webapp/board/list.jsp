@@ -135,8 +135,10 @@
 							BoardBean bean = vlist.get(i);
 							int num = bean.getNum();
 							String name = bean.getName();
-							String cname = "";			
-
+							String cname = "";		
+					%>
+					<!-- 이름 가리기 -->
+					<%
 							if ( name.length() < 3 ) {
 								cname = name.charAt(0) + "*";
 							} else {
@@ -147,7 +149,8 @@
 								cname += name.charAt(name.length()-1);
 							}					
 							name = cname;
-							
+					%>
+					<%		
 							String subject = bean.getSubject();
 							String regdate = bean.getRegdate();
 							int depth = bean.getDepth();
@@ -164,37 +167,28 @@
 						</td>
 						<td>
 						<%
-							  if(depth>0){
+							if(depth>0){
 								for(int j=0;j<depth;j++){
 									out.println("&nbsp;&nbsp;");
-									}
+								}
+							}
+						%>
+						<!-- 삭제된 게시물 확인 -->
+						<%	
+							boolean deleted = bean.isDeleted() != 0;
+							if( !deleted ) {
+								String str = "";
+								String pass = bean.getPass();
+								boolean secret = pass.length()!=0;
+								if ( secret ) {
+									str = "javascript:checkPass('"+pass+"',"+num+")";
+								} else {
+									str = "javascript:read("+num+")";
 								}
 						%>
-						<%
-								boolean deleted = false;
-								ArrayList<Boolean> deletedBoard = null;
-								if ( session.getAttribute("deletedBoard") != null ) {
-									 deletedBoard= (ArrayList<Boolean>) session.getAttribute("deletedBoard");
-
-									 if ( deletedBoard.contains(bean.getNum()) ) {
-										deleted = true;
-									 }
-								}
-						%>
-						<%
-								if( !deleted ) {
-									String str = "";
-									String pass = bean.getPass();
-									boolean secret = pass.length()!=0;
-									if ( secret ) {
-										str = "javascript:checkPass('"+pass+"',"+num+")";
-									} else {
-										str = "javascript:read("+num+")";
-									}
-						%>
-										<a href= <%=str %>><%=subject%></a>
+								<a href= <%=str %>><%=subject%></a>
 						<%	} else{%>
-										<font color="red"><del><%=subject%></del></font>
+								<font color="red"><del><%=subject%></del></font>
 						<%	} %>
 						</td>
 						<td align="center"><%=name%></td>

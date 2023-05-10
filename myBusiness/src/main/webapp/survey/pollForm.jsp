@@ -14,11 +14,14 @@ Vector<String> vlist = pMgr.getItem(num);
 String question = plBean.getQuestion();
 int type = plBean.getType();
 int active = plBean.getActive();
+
+request.setCharacterEncoding("UTF-8");
+String id = (String)session.getAttribute("idKey");
 %>
 <link href="../member/styles/style.css" rel="stylesheet" type="text/css">
 <form name="pollFrm" method="post" action="pollFormProc.jsp">
 	<table border="2" bordercolor="white" width="300" bgcolor="#131921">
-		<tr>
+		<tr align="center">
 			<td colspan="2">Q : <%=question%></td>
 		</tr>
 		<tr>
@@ -36,18 +39,20 @@ int active = plBean.getActive();
 				%>
 			</td>
 		</tr>
-		<tr>
-			<td><%
- if (active == 1) {
- 	out.println("<input type='submit' value='투표'");
- } else {
- 	out.println("투표");
- }
- %></td>
-			<td><input type="button" value="결과"
-					onclick="javascript:window.open('pollView.jsp?num=<%=num%>',
-		               'PollView','width=500, height=350')"
-				></td>
+		<tr align="center">
+			<td colspan="2" style="padding: 5px 0;">
+				<%
+				if (active == 1) {
+					out.println("<input type='submit' value='투표'>");
+				} else {
+					out.println("<input type='submit' value='투표' disabled>");
+				}
+				
+				if ( id != null ) {
+				%>
+				<input type="button" value="결과" onclick="javascript:window.open('pollView.jsp?num=<%=num%>', 'PollView','width=500, height=350')">
+				<%} %>
+			</td>
 		</tr>
 	</table>
 	<input type="hidden" name="num" value="<%=num%>">

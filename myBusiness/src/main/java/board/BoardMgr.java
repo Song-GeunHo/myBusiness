@@ -69,6 +69,7 @@ public class BoardMgr {
 				bean.setDepth(rs.getInt("depth"));
 				bean.setRegdate(rs.getString("regdate"));
 				bean.setCount(rs.getInt("count"));
+				bean.setDeleted(rs.getByte("deleted"));
 				vlist.add(bean);
 			}
 		} catch (Exception e) {
@@ -212,7 +213,7 @@ public class BoardMgr {
 		}
 	}
 
-	// 게시물 삭제
+	/* 게시물 완전 삭제
 	public void deleteBoard(int num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -240,7 +241,37 @@ public class BoardMgr {
 		} finally {
 			pool.freeConnection(con, pstmt, rs);
 		}
-	}
+	}*/
+	
+	// 게시물 삭제
+		public void deleteBoard(int num) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			ResultSet rs = null;
+			try {
+				con = pool.getConnection();
+				sql = "select filename from tblBoard where num = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				rs = pstmt.executeQuery();
+				if (rs.next() && rs.getString(1) != null) {
+					if (!rs.getString(1).equals("")) {
+						File file = new File(SAVEFOLDER + "/" + rs.getString(1));
+						if (file.exists())
+							UtilMgr.delete(SAVEFOLDER + "/" + rs.getString(1));
+					}
+				}
+				sql = "update tblBoard set deleted=1 where num=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+		}
 
 	// 게시물 수정
 	public void updateBoard(BoardBean bean) {

@@ -39,9 +39,9 @@
 	
 	function checkDate() {
 		let form = document.pollInsertFrm;
-		let sdate = form.sdateY.value + form.sdateM.value + form.sdateD.value;
-		let edate = form.edateY.value + form.edateM.value + form.edateD.value;
-		if ( parseInt(sdate) > parseInt(edate) ) {
+		let sdate = new Date(form.sdateY.value + "-" + form.sdateM.value + "-" + form.sdateD.value);
+		let edate = new Date(form.edateY.value + "-" + form.edateM.value + "-" + form.edateD.value);
+		if ( sdate > edate ) {
 			alert("시작일자와 종료일자를 확인해주세요.");
 			form.sdateY.value = <%=today.getYear()%>;
 			form.sdateM.value = 1;

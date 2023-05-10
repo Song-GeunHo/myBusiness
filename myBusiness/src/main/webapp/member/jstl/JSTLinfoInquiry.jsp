@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 %>
-<%@ page	import="member.MemberBean"%>
-<jsp:useBean id="mgr" class="member.MemberMgr" />
-<%
-String id = (String) session.getAttribute("idKey");
-MemberBean bean = mgr.getMember(id);
-%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -78,87 +74,97 @@ th {
 <body>
 	<div align="center">
 		<h1>회원정보 조회</h1>
-		<form method=post action="infoInquiryProc.jsp" onsubmit="return checkInput();">
+		<sql:query var="search" dataSource="${db}">
+			SELECT * FROM tblmember where id=? 
+			<sql:param value="${newIDKey}"/>
+		</sql:query>
+		<c:forEach var="info" items="${search.rows}">
 			<table>
 				<tr>
 					<th>아이디</th>
-					<td><%=bean.getId()%></td>
+					<td>${info.id }</td>
 				</tr>
 				<tr>
 					<th>이름</th>
-					<td><%=bean.getName()%></td>
+					<td>${info.name }</td>
 					<td class="infoInput" style="display:none;"><input name="name"></td>
 				</tr>
 				<tr>
 					<th>성별</th>
-					<%
-					if (bean.getGender().equals("1")) {
-					%>
-					<td>남자</td>
-					<%
-					} else {
-					%>
-					<td>여자</td>
-					<%
-					}
-					%>
+					<c:choose>
+						<c:when test="${info.gender} eq '1'">
+							<td>남자</td>
+						</c:when>
+						<c:otherwise>
+							<td>여자</td>	
+						</c:otherwise>
+					</c:choose>
 					<td class="infoInput" style="display:none;"><input name="gender"></td>
 				</tr>
 				<tr>
 					<th>생년월일</th>
-					<td><%=bean.getBirthday()%></td>
+					<td>${info.birthday }</td>
 					<td class="infoInput" style="display:none;"><input name="birthday"></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td><%=bean.getEmail()%></td>
+					<td>${info.email }</td>
 					<td class="infoInput" style="display:none;"><input name="email"></td>
 				</tr>
 				<tr>
 					<th>우편번호</th>
-					<td><%=bean.getZipcode()%></td>
+					<td>${info.zipcode }</td>
 					<td class="infoInput" style="display:none;"><input name="zipcode"></td>
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td><%=bean.getAddress()%></td>
+					<td>${info.address }</td>
 					<td class="infoInput" style="display:none;"><input name="address"></td>
 				</tr>
 				<%
 				String str = "";
-				String[] hobby = { "인터넷", "여행", "게임", "영화", "운동" };
-				String[] hobbyNum = bean.getHobby();
-	
-				for (int i = 0; i < hobbyNum.length; i++) {
-					if (hobbyNum[i].equals("1")) {
-						str += hobby[i] + ", ";
-					}
-				}
-				
-				if(str.length()!=0) {
-					if (str.charAt(str.length() - 1) == ' ') {
-						str = str.substring(0, str.length() - 2);
-					}
-				}
+				String[] hobbys = { "인터넷", "여행", "게임", "영화", "운동" };
 				%>
+				<c:set var="hobbys" value="<%=hobbys %>" />
+				<c:set var="hobby" value="${info.hobby}" />
+				<%
+						String hobbyNum = (String)pageContext.getAttribute("hobby");
+						String[] hobby = hobbyNum.split("");
+				%>
+				<c:set var="hobby" value="<%=hobby %>" />
 				<tr>
 					<th>취미</th>
-					<td><%=str%></td>
+					<td>
+					<c:forEach var="myHobby" items="${hobbys }" begin="0" step="1" end="4" varStatus="status">
+						<c:if test="${hobby[status.count-1] eq '1' }">
+									${hobbys[status.count-1]}&nbsp&nbsp
+						</c:if>
+					</c:forEach>
+					</td>
 					<td class="infoInput" style="display:none;"><input name="hobby"></td>
 				</tr>
+				<sql:query var="getJobname" dataSource="${db}">
+					SELECT jobname FROM tblmember NATURAL JOIN tbljob WHERE jobcode = ? and tblmember.id = ?
+					<sql:param value="${info.jobcode}"/>
+					<sql:param value="${newIDKey}"/>
+				</sql:query>
 				<tr>
 					<th>직업</th>
-					<td><%=bean.getJob()%></td>
+					<td>
+					<c:forEach var="jobname" items="${getJobname.rows }">
+						${jobname['jobname']}
+					</c:forEach>
+					</td>
 					<td class="infoInput" style="display:none;"><input name="jobcode"></td>
 				</tr>
 				<tr>
 					<th>국적</th>
-					<td><%=bean.getNationality() %></td>
+					<td>${info.nationality }</td>
 					<td class="infoInput" style="display:none;"><input name="nationality"></td>
 				</tr>
 			</table>
-		</form>
+	</c:forEach>
 	</div>
-	<div align="right" style="width:465px; margin:15px auto; font-size:20px;"><input class="btn" type="button" value="취소" style="display:none;" onclick="changeInfo(this);"><input class="btn" type="submit" value="확인" style="display:none;"><input class="btn" type="button" value="비밀번호 변경" onclick="changeInfo(this);"><input class="btn" type="button" value="회원정보 변경" onclick="changeInfo(this);"></div>
+	<div align="right" style="width:465px; margin:15px auto; font-size:20px;"><input class="btn" type="button" value="비밀번호 변경" onclick="changeInfo(this);"></div>
 </body>
 </html>

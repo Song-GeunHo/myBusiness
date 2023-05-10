@@ -15,6 +15,7 @@ public class BoardBean {
 	private int count;        
 	private String filename; 
 	private int filesize;
+	private byte deleted;
 	
 	public int getNum() {
 		return num;
@@ -94,5 +95,12 @@ public class BoardBean {
 	public void setFilesize(int filesize) {
 		this.filesize = filesize;
 	}
+	public byte isDeleted() {
+		return deleted;
+	}
+	public void setDeleted(byte deleted) {
+		this.deleted = deleted;
+	}
+	
 	
 }
